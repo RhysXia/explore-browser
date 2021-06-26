@@ -53,6 +53,6 @@ export const getApolloClient = (initialState: object = {}) => {
     return _apolloClient;
 }
 
-export const useApollo = (initialState: any) => {
+export const useApollo = (initialState: object) => {
     return useMemo(() => getApolloClient(initialState), [initialState]);
 }
