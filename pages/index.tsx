@@ -4,30 +4,9 @@ import { GetStaticProps, NextComponentType } from 'next'
 import { getReduxStore, useAppDispatch, useAppSelector } from '../redux'
 import { setToken } from '../redux/store'
 
-const message = gql`
-  query {
-    categories {
-      name
-      id
-    }
-  }
-`
+
 
 const Home: NextComponentType = (props) => {
-  const { data, loading } = useQuery(message)
-
-  const dispatch = useAppDispatch()
-
-  const client = useApolloClient()
-
-  const token = useAppSelector(state => state.token)
-
-  const clickHandler = async () => {
-    await dispatch(setToken("123"))
-    await client.query({
-      query: gql`query{category(id: ${Math.round(Math.random() * 10)}){name}}`
-    })
-  }
 
   return (
     <div>
@@ -38,9 +17,6 @@ const Home: NextComponentType = (props) => {
       </Head>
 
       <main>
-        <button onClick={clickHandler}>btn</button>
-        {!loading &&
-          data.categories.map((it) => <p key={it.name}>{it.name}</p>)}
       </main>
     </div>
   )
