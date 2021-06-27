@@ -14,14 +14,12 @@ const authLink = setContext((_, { headers }) => {
 
     const store = getReduxStore()
 
-    const token = store.getState().token
-
-    console.log(token, '====')
+    const state = store.getState()
 
     return {
       headers: {
         ...headers,
-        authorization: token,
+        authorization: state.token,
       }
     }
   });

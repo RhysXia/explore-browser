@@ -25,7 +25,7 @@ const Home: NextComponentType = (props) => {
   const clickHandler = async () => {
     await dispatch(setToken("123"))
     await client.query({
-      query: gql`query{currentUser{username}}`
+      query: gql`query{category(id: ${Math.round(Math.random() * 10)}){name}}`
     })
   }
 

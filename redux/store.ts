@@ -6,7 +6,8 @@ export type State = {
   currentUser?: User
 }
 
-export const initialState: State = {}
+export const initialState: State = {
+}
 
 const slice = createSlice({
   name: 'root',

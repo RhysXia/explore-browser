@@ -16,18 +16,21 @@ const createStore = (preloadedState: object) => {
 let store: ReturnType<typeof createStore> | undefined
 
 export const getReduxStore = (preloadedState: object = {}) => {
-  let _store = store ?? createStore(preloadedState)
+  let _store = store
+  if(_store) {
+    if (preloadedState && _store) {
+      _store = createStore({
+        ..._store.getState(),
+        ...preloadedState,
+      })
+    }
+  } else {
+    _store = createStore(preloadedState)
+  }
 
   // After navigating to a page with an initial Redux state, merge that state
   // with the current state in the store, and create a new store
-  if (preloadedState && store) {
-    _store = createStore({
-      ...store.getState(),
-      ...preloadedState,
-    })
-    // Reset the current store
-    store = undefined
-  }
+
 
   // For SSG and SSR always create a new store
   if (typeof window === 'undefined') return _store
