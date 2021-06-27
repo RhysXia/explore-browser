@@ -1,5 +1,4 @@
-import { createSlice, ThunkDispatch } from '@reduxjs/toolkit'
-import { AppThunk } from '.'
+import { createSlice,  } from '@reduxjs/toolkit'
 import { User } from '../model'
 
 export type State = {
@@ -22,13 +21,6 @@ const slice = createSlice({
   },
 })
 
-
-export const login =
-  (username: string, password: string): AppThunk =>
-  async (dispatch) => {
-
-  }
-
 export default slice
 
-export const { setToken } = slice.actions
+export const { setToken, setCurrentUser } = slice.actions

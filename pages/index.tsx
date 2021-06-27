@@ -1,10 +1,8 @@
 import Head from 'next/head'
-import { gql, useQuery } from '@apollo/client'
-import { getApolloClient } from '../apollo'
+import { gql, useQuery, useApolloClient } from '@apollo/client'
 import { GetStaticProps, NextComponentType } from 'next'
-import { getReduxStore, useAppSelector } from '../redux'
-import {  } from '../redux/store'
-import { useSelector } from 'react-redux'
+import { getReduxStore, useAppDispatch, useAppSelector } from '../redux'
+import { setToken } from '../redux/store'
 
 const message = gql`
   query {
@@ -18,9 +16,18 @@ const message = gql`
 const Home: NextComponentType = (props) => {
   const { data, loading } = useQuery(message)
 
+  const dispatch = useAppDispatch()
+
+  const client = useApolloClient()
+
   const token = useAppSelector(state => state.token)
 
-  console.log(data, token)
+  const clickHandler = async () => {
+    await dispatch(setToken("123"))
+    await client.query({
+      query: gql`query{currentUser{username}}`
+    })
+  }
 
   return (
     <div>
@@ -31,6 +38,7 @@ const Home: NextComponentType = (props) => {
       </Head>
 
       <main>
+        <button onClick={clickHandler}>btn</button>
         {!loading &&
           data.categories.map((it) => <p key={it.name}>{it.name}</p>)}
       </main>
@@ -39,19 +47,17 @@ const Home: NextComponentType = (props) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const client = getApolloClient()
-  await client.query({
-    query: message,
-  })
+//   const client = getApolloClient()
+//   await client.query({
+//     query: message,
+//   })
   const store = getReduxStore()
 
   const { dispatch } = store
 
-//   dispatch(increaseCount())
-
   return {
     props: {
-      apolloState: client.cache.extract(),
+      // apolloState: client.cache.extract(),
       reduxState: store.getState(),
     },
   }
