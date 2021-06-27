@@ -3,10 +3,28 @@ import {getMainDefinition} from "@apollo/client/utilities";
 import WebSocketLink from "./WebSocketLink";
 import {isClient, isServer} from "../utils/env";
 import {useMemo} from "react";
+import { setContext } from '@apollo/client/link/context';
+import { getReduxStore } from '../redux';
 
 const httpLink = new HttpLink({
-    uri: 'http://localhost:8080/graphql'
+    uri: 'http://localhost:8080/graphql',
 });
+
+const authLink = setContext((_, { headers }) => {
+
+    const store = getReduxStore()
+
+    const token = store.getState().token
+
+    console.log(token, '====')
+
+    return {
+      headers: {
+        ...headers,
+        authorization: token,
+      }
+    }
+  });
 
 const splitLink = isClient ? split(
     ({query}) => {
@@ -25,7 +43,7 @@ const splitLink = isClient ? split(
 
 const createClient = () => {
     const client = new ApolloClient({
-        link: splitLink,
+        link: authLink.concat(splitLink),
         cache: new InMemoryCache(),
         ssrMode: isServer
     });
