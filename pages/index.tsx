@@ -3,10 +3,15 @@ import { gql, useQuery, useApolloClient } from '@apollo/client'
 import { GetStaticProps, NextComponentType } from 'next'
 import { getReduxStore, useAppDispatch, useAppSelector } from '../redux'
 import { setToken } from '../redux/store'
+import { getApolloClient } from '../apollo'
+import { useDispatch } from 'react-redux'
+import { login } from '../redux/actions'
 
 
 
 const Home: NextComponentType = (props) => {
+
+  const dispatch = useDispatch()
 
   return (
     <div>

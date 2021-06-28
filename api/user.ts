@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
 export const login = (username: string, password: string) => {
   return getApolloClient().mutate<{ login: string }>({
     mutation: gql`
-      mutation {
+      mutation($username: String!, $password: String!) {
         login(username: $username, password: $password)
       }
     `,
