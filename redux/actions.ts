@@ -1,6 +1,5 @@
 import { AppThunk } from ".";
 import { getApolloClient } from "../apollo";
-import { gql } from "@apollo/client";
 import { setCurrentUser, setToken } from "./store";
 import { getCurrentUser, login as loginApi } from "../api";
 
