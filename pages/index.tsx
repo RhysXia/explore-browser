@@ -7,8 +7,6 @@ import { getApolloClient } from '../apollo'
 import { useDispatch } from 'react-redux'
 import { login } from '../redux/actions'
 
-
-
 const Home: NextComponentType = (props) => {
 
   const dispatch = useDispatch()
@@ -22,6 +20,7 @@ const Home: NextComponentType = (props) => {
       </Head>
 
       <main>
+
       </main>
     </div>
   )

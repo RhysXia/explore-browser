@@ -17,8 +17,8 @@ const authLink = setContext((_, { headers }) => {
 
   return {
     headers: {
+      authorization: state.token || '',
       ...headers,
-      authorization: state.token,
     },
   };
 });
@@ -41,7 +41,7 @@ const splitLink = isClient
           const store = getReduxStore();
           const state = store.getState();
           return {
-            token: state.token,
+            token: state.token || '',
           };
         },
       }),
