@@ -1,5 +1,6 @@
 import { getApolloClient } from "../apollo";
 import { gql } from "@apollo/client";
+import { User } from "../model";
 
 export const login = (username: string, password: string) => {
   return getApolloClient().mutate<{ login: string }>({
@@ -16,7 +17,7 @@ export const login = (username: string, password: string) => {
 };
 
 export const getCurrentUser = () => {
-  return getApolloClient().query({
+  return getApolloClient().query<{currentUser: User}>({
     query: gql`
       query {
         currentUser {

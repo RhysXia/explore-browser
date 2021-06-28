@@ -37,3 +37,8 @@ export type User = {
   updatedAt: number
   lastLoginAt: number
 }
+
+export type Article = {
+  id: number
+  title: number
+}
