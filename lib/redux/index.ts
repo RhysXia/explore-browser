@@ -13,7 +13,10 @@ const createStore = (preloadedState: object) => {
   })
 }
 
-let store: ReturnType<typeof createStore> | undefined
+export type AppStore = ReturnType<typeof createStore>
+
+
+let store: AppStore | undefined
 
 export const getReduxStore = (preloadedState: object = {}) => {
   let _store = store
@@ -45,7 +48,6 @@ export const useStore = (initialState: object) => {
   return store
 }
 
-export type AppStore = ReturnType<typeof createStore>
 
 export type AppState = ReturnType<AppStore['getState']>
 

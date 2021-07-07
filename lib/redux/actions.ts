@@ -1,6 +1,6 @@
 import { AppThunk } from ".";
 import { setCurrentUser, setToken } from "./store";
-import { getCurrentUser, login as loginApi } from "../api";
+import { getCurrentUser, login as loginApi } from "../../api";
 
 /**
  * 登录

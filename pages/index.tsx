@@ -17,4 +17,6 @@ const Home: NextComponentType = (props) => {
   );
 };
 
+
+
 export default Home;
