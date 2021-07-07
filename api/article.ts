@@ -1,4 +1,4 @@
-import { getApolloClient } from "../apollo";
+import { getApolloClient } from "../lib/apollo";
 import { gql } from "@apollo/client";
 import { Article } from "../model";
 

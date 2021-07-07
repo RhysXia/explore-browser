@@ -1,5 +1,5 @@
 import { createSlice,  } from '@reduxjs/toolkit'
-import { User } from '../model'
+import { User } from '../../model'
 
 export type State = {
   token?: string
