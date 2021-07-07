@@ -90,5 +90,5 @@ export const getApolloClient = (initialState?: object, store: AppStore = getRedu
 };
 
 export const useApollo = (initialState: object, store: AppStore) => {
-  return useMemo(() => getApolloClient(initialState, store), [initialState]);
+  return useMemo(() => getApolloClient(initialState, store), [initialState, store]);
 };

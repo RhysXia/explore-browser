@@ -5,7 +5,6 @@ import React from "react";
 import Footer from "../components/Footer";
 
 const Home: NextComponentType = (props) => {
-
   return (
     <div>
       <Head>
@@ -16,7 +15,5 @@ const Home: NextComponentType = (props) => {
     </div>
   );
 };
-
-
 
 export default Home;

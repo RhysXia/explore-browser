@@ -7,9 +7,9 @@ import { getReduxStore, useStore } from "../../lib/redux";
 import React from "react";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const store = useStore(pageProps.reduxState);
+  const store = useStore(pageProps.initialReduxState);
 
-  const apolloClient = useApollo(pageProps.apolloState, store);
+  const apolloClient = useApollo(pageProps.initialApolloState, store);
 
   return (
     <Provider store={store}>
@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-  const { ctx } = appContext;
+  const { ctx, Component } = appContext;
 
   const reduxStore = getReduxStore();
 
@@ -32,7 +32,17 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     ...appContext,
     reduxStore,
     apolloClient,
-  });
+  } as AppContext);
 
-  return { ...appProps };
+  const initialReduxState = reduxStore.getState();
+
+  const initialApolloState = apolloClient.cache.extract();
+
+  const pageProps = {
+    ...appProps.pageProps,
+    initialReduxState,
+    initialApolloState,
+  };
+
+  return { ...appProps, pageProps };
 };
