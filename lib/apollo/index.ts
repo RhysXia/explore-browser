@@ -2,7 +2,6 @@ import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, split } from "
 import { getMainDefinition } from "@apollo/client/utilities";
 import WebSocketLink from "./WebSocketLink";
 import { isClient, isServer, serverHost } from "../../utils/env";
-import { useMemo } from "react";
 import { AppStore, getReduxStore } from "../redux";
 
 const createClient = (store?: AppStore) => {
@@ -90,5 +89,8 @@ export const getApolloClient = (initialState?: object, store: AppStore = getRedu
 };
 
 export const useApollo = (initialState: object, store: AppStore) => {
-  return useMemo(() => getApolloClient(initialState, store), [initialState, store]);
+  if(apolloClient) {
+    return apolloClient
+  }
+  return getApolloClient(initialState, store)
 };
