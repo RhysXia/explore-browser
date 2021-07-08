@@ -3,8 +3,9 @@ import { NextComponentType } from "next";
 import Header from "../components/Header";
 import React from "react";
 import Footer from "../components/Footer";
+import { AppPageContext } from "../typings/next";
 
-const Home: NextComponentType = (props) => {
+const Home: NextComponentType<AppPageContext> = (props) => {
   return (
     <div>
       <Head>
@@ -14,6 +15,13 @@ const Home: NextComponentType = (props) => {
       <Footer />
     </div>
   );
+};
+
+Home.getInitialProps = async (ctx) => {
+
+  return {
+    pageProps: {}
+  }
 };
 
 export default Home;
