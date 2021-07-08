@@ -3,14 +3,14 @@ import App from "next/app";
 import { ApolloProvider, gql } from "@apollo/client";
 import { Provider } from "react-redux";
 import { getApolloClient, useApollo } from "../../lib/apollo";
-import { getReduxStore, useStore } from "../../lib/redux";
+import { getReduxStore, useReduxStore } from "../../lib/redux";
 import React from "react";
 import getToken from "../../utils/getToken";
 import { setToken } from "../../lib/redux/store";
 import { User } from "../../model";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const store = useStore(pageProps.initialReduxState);
+  const store = useReduxStore(pageProps.initialReduxState);
 
   const apolloClient = useApollo(pageProps.initialApolloState, store);
 
@@ -29,29 +29,31 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const reduxStore = getReduxStore();
   const apolloClient = getApolloClient(undefined, reduxStore);
 
-  if (!reduxStore.getState().token) {
-    const token = getToken(ctx.req);
-    reduxStore.dispatch(setToken(token));
+  reduxStore.dispatch(setToken("123"));
 
-    const {data, errors} = await apolloClient.query<{currentUser: User}>({
-      query: gql`query {
-        currentUser {
-          id
-          username
-          nickname
-          email
-          avatar
-          bio
-        }
-      }`
-    })
+  console.log('init');
 
-    if(errors) {
+  // if (!reduxStore.getState().token) {
+  //   const token = getToken(ctx.req);
+  //   reduxStore.dispatch(setToken(token));
 
-    }
-  }
+  //   const {data, errors} = await apolloClient.query<{currentUser: User}>({
+  //     query: gql`query {
+  //       currentUser {
+  //         id
+  //         username
+  //         nickname
+  //         email
+  //         avatar
+  //         bio
+  //       }
+  //     }`
+  //   })
 
+  //   if(errors) {
 
+  //   }
+  // }
   (ctx as any).reduxStore = reduxStore;
   (ctx as any).apolloClient = apolloClient;
 

@@ -43,7 +43,7 @@ export const getReduxStore = (preloadedState: object = {}) => {
   return _store
 }
 
-export const useStore = (initialState: object) => {
+export const useReduxStore = (initialState: object) => {
   const store = useMemo(() => getReduxStore(initialState), [initialState])
   return store
 }
