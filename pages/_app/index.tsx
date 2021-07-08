@@ -5,19 +5,22 @@ import { Provider } from "react-redux";
 import { getApolloClient, useApollo } from "../../lib/apollo";
 import { getReduxStore, useReduxStore } from "../../lib/redux";
 import React from "react";
-import getToken from "../../utils/getToken";
-import { setToken } from "../../lib/redux/store";
+import { setCurrentUser, setToken } from "../../lib/redux/store";
+import { Cookie } from "next-cookie";
 import { User } from "../../model";
+import { TOKEN_KEY } from "../../utils/consts";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const store = useReduxStore(pageProps.initialReduxState);
+  const { initialReduxState, initialApolloState, ...others } = pageProps;
 
-  const apolloClient = useApollo(pageProps.initialApolloState, store);
+  const store = useReduxStore(initialReduxState);
+
+  const apolloClient = useApollo(initialApolloState, store);
 
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
+        <Component {...others} />
       </ApolloProvider>
     </Provider>
   );
@@ -29,31 +32,35 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const reduxStore = getReduxStore();
   const apolloClient = getApolloClient(undefined, reduxStore);
 
-  reduxStore.dispatch(setToken("123"));
+  if (!reduxStore.getState().token) {
+    const cookie = new Cookie(ctx);
+    const token = cookie.get(TOKEN_KEY);
+    if (token) {
+      reduxStore.dispatch(setToken(token));
+      try {
+        const { data } = await apolloClient.query<{ currentUser: User }>({
+          query: gql`
+            query {
+              currentUser {
+                id
+                username
+                nickname
+                email
+                avatar
+                bio
+              }
+            }
+          `,
+        });
+        reduxStore.dispatch(setCurrentUser(data.currentUser));
+      } catch (err) {
+        // 出现错误，重置token
+        reduxStore.dispatch(setToken(undefined));
+        cookie.remove(TOKEN_KEY);
+      }
+    }
+  }
 
-  console.log('init');
-
-  // if (!reduxStore.getState().token) {
-  //   const token = getToken(ctx.req);
-  //   reduxStore.dispatch(setToken(token));
-
-  //   const {data, errors} = await apolloClient.query<{currentUser: User}>({
-  //     query: gql`query {
-  //       currentUser {
-  //         id
-  //         username
-  //         nickname
-  //         email
-  //         avatar
-  //         bio
-  //       }
-  //     }`
-  //   })
-
-  //   if(errors) {
-
-  //   }
-  // }
   (ctx as any).reduxStore = reduxStore;
   (ctx as any).apolloClient = apolloClient;
 

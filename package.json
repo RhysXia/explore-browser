@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
@@ -18,8 +19,8 @@
     "@xl-vision/styled-engine": "0.0.0",
     "graphql": "^15.5.0",
     "graphql-ws": "^4.5.1",
-    "js-cookie": "^2.2.1",
-    "next": "10.2.2",
+    "next": "^11.0.1",
+    "next-cookie": "^2.6.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.4",
@@ -27,6 +28,8 @@
     "ws": "^7.4.5"
   },
   "devDependencies": {
-    "typescript": "4.2.4"
+    "eslint": "^7.30.0",
+    "eslint-config-next": "^11.0.1",
+    "typescript": "^4.3.5"
   }
 }

@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import slice, { initialState } from './store'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
@@ -44,8 +43,10 @@ export const getReduxStore = (preloadedState: object = {}) => {
 }
 
 export const useReduxStore = (initialState: object) => {
-  const store = useMemo(() => getReduxStore(initialState), [initialState])
-  return store
+  if(store) {
+    return store
+  }
+  return getReduxStore(initialState)
 }
 
 
