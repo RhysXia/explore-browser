@@ -6,7 +6,9 @@ export type HeaderProps = {};
 
 const Root = styled("header")(
   ({ theme }) => `
-  border-bottom: 1px solid ${theme.color.divider};
+  box-shadow: 0 1px 2px 0 ${theme.color.divider};
+  background-color: ${theme.color.background.paper};
+  height: 60px;
 `
 );
 

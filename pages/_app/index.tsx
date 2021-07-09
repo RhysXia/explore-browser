@@ -14,8 +14,14 @@ import {
   ThemeProvider,
   LocalizationProvider,
   BaseTheme,
+  createGlobalStyles,
 } from "@xl-vision/react";
 
+const CustomBaseline = createGlobalStyles(
+  () => `
+
+`
+);
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { initialReduxState, initialApolloState, ...others } = pageProps;
 
@@ -37,6 +43,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <LocalizationProvider language="zh-CN">
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <CustomBaseline />
             <Component {...others} />
           </ThemeProvider>
         </LocalizationProvider>
