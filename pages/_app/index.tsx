@@ -1,4 +1,4 @@
-import type { AppContext, AppProps, NextWebVitalsMetric } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import App from "next/app";
 import { ApolloProvider, gql } from "@apollo/client";
 import { Provider } from "react-redux";
@@ -15,7 +15,6 @@ import {
   LocalizationProvider,
   BaseTheme,
 } from "@xl-vision/react";
-import { isDev } from "../../utils/env";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { initialReduxState, initialApolloState, ...others } = pageProps;
@@ -100,8 +99,8 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   return { ...appProps, pageProps };
 };
 
-export function reportWebVitals(metric: NextWebVitalsMetric) {
-  if (isDev) {
-    console.log(metric);
-  }
-}
+// export function reportWebVitals(metric: NextWebVitalsMetric) {
+//   if (isDev) {
+//     console.log(metric);
+//   }
+// }
