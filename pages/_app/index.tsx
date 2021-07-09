@@ -4,11 +4,17 @@ import { ApolloProvider, gql } from "@apollo/client";
 import { Provider } from "react-redux";
 import { getApolloClient, useApollo } from "../../lib/apollo";
 import { getReduxStore, useReduxStore } from "../../lib/redux";
-import React from "react";
+import React, { useMemo } from "react";
 import { setCurrentUser, setToken } from "../../lib/redux/store";
 import { Cookie } from "next-cookie";
 import { User } from "../../model";
 import { TOKEN_KEY } from "../../utils/consts";
+import {
+  CssBaseline,
+  ThemeProvider,
+  LocalizationProvider,
+  BaseTheme,
+} from "@xl-vision/react";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { initialReduxState, initialApolloState, ...others } = pageProps;
@@ -17,10 +23,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const apolloClient = useApollo(initialApolloState, store);
 
+  const theme: BaseTheme = useMemo(() => {
+    return {
+      color: {
+        mode: "light",
+      },
+    };
+  }, []);
+
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <Component {...others} />
+        <LocalizationProvider language="zh-CN">
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...others} />
+          </ThemeProvider>
+        </LocalizationProvider>
       </ApolloProvider>
     </Provider>
   );
