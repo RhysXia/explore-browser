@@ -16,14 +16,19 @@ import {
   BaseTheme,
   createGlobalStyles,
 } from "@xl-vision/react";
+import LayoutMap, { LayoutKey } from "../../layout";
+import AppThemeContext, { defaultAppTheme } from "../../lib/theme";
 
-const CustomBaseline = createGlobalStyles(
-  () => `
-
-`
-);
+const CustomBaseline = createGlobalStyles(() => {
+  return {};
+});
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const { initialReduxState, initialApolloState, ...others } = pageProps;
+  const {
+    initialReduxState,
+    initialApolloState,
+    layout = "default",
+    ...others
+  } = pageProps;
 
   const store = useReduxStore(initialReduxState);
 
@@ -37,15 +42,25 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+  const Layout = LayoutMap[layout as LayoutKey];
+
+  const appTheme = useMemo(() => {
+    return defaultAppTheme;
+  }, []);
+
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
         <LocalizationProvider language="zh-CN">
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <CustomBaseline />
-            <Component {...others} />
-          </ThemeProvider>
+          <AppThemeContext.Provider value={appTheme}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <CustomBaseline />
+              <Layout>
+                <Component {...others} />
+              </Layout>
+            </ThemeProvider>
+          </AppThemeContext.Provider>
         </LocalizationProvider>
       </ApolloProvider>
     </Provider>
@@ -58,9 +73,11 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const reduxStore = getReduxStore();
   const apolloClient = getApolloClient(undefined, reduxStore);
 
-  if (!reduxStore.getState().token) {
+  const state = reduxStore.getState();
+
+  if (!state.currentUser) {
     const cookie = new Cookie(ctx);
-    const token = cookie.get(TOKEN_KEY);
+    const token = cookie.get(TOKEN_KEY) || state.token;
     if (token) {
       reduxStore.dispatch(setToken(token));
       try {
@@ -79,6 +96,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
           `,
         });
         reduxStore.dispatch(setCurrentUser(data.currentUser));
+        cookie.set(TOKEN_KEY, token, {
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+        });
       } catch (err) {
         // 出现错误，重置token
         reduxStore.dispatch(setToken(undefined));

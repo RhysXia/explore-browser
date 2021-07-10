@@ -1,24 +1,24 @@
 import Head from "next/head";
 import { NextComponentType } from "next";
-import Header from "../components/Header";
 import React from "react";
-import Footer from "../components/Footer";
 import { AppPageContext } from "../typings/next";
+import { LayoutKey } from "../layout";
 
-const Home: NextComponentType<AppPageContext> = (props) => {
+const Home: NextComponentType<AppPageContext, {layout: LayoutKey}> = (props) => {
   return (
     <div>
       <Head>
         <title>首页｜Explore</title>
       </Head>
-      <Header />
-      <Footer />
+      abc
     </div>
   );
 };
 
-// Home.getInitialProps = async (ctx) => {
-//   return {};
-// };
+Home.getInitialProps = async (ctx) => {
+  return {
+    layout: 'default'
+  };
+};
 
 export default Home;
