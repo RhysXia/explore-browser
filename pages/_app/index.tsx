@@ -18,6 +18,7 @@ import {
 } from "@xl-vision/react";
 import LayoutMap, { LayoutKey } from "../../layout";
 import AppThemeContext, { defaultAppTheme } from "../../lib/theme";
+import { isClient } from "../../utils/env";
 
 const CustomBaseline = createGlobalStyles(() => {
   return {};
@@ -75,11 +76,15 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
   const state = reduxStore.getState();
 
+  const cookie = new Cookie(ctx);
+
   if (!state.currentUser) {
-    const cookie = new Cookie(ctx);
-    const token = cookie.get(TOKEN_KEY) || state.token;
+    const token = state.token || cookie.get(TOKEN_KEY);
+
     if (token) {
-      reduxStore.dispatch(setToken(token));
+      if (!state.token) {
+        reduxStore.dispatch(setToken(token));
+      }
       try {
         const { data } = await apolloClient.query<{ currentUser: User }>({
           query: gql`
@@ -96,15 +101,21 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
           `,
         });
         reduxStore.dispatch(setCurrentUser(data.currentUser));
-        cookie.set(TOKEN_KEY, token, {
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-        });
       } catch (err) {
         // 出现错误，重置token
         reduxStore.dispatch(setToken(undefined));
         cookie.remove(TOKEN_KEY);
       }
     }
+  }
+
+  const newToken = reduxStore.getState().token;
+
+  if (newToken) {
+    // 更新过期时间
+    cookie.set(TOKEN_KEY, newToken, {
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+    });
   }
 
   (ctx as any).reduxStore = reduxStore;
