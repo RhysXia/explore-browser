@@ -18,7 +18,6 @@ import {
 } from "@xl-vision/react";
 import LayoutMap, { LayoutKey } from "../../layout";
 import AppThemeContext, { defaultAppTheme } from "../../lib/theme";
-import { isClient } from "../../utils/env";
 
 const CustomBaseline = createGlobalStyles(() => {
   return {};
