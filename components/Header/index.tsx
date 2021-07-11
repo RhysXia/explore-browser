@@ -106,6 +106,8 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
         <ul className="user">
           {currentUser ? (
             <Dropdown
+              // 便于搜索引擎可以正确拿到对应的url
+              mountOnShow={false}
               menus={
                 <>
                   <Dropdown.Item>个人主页</Dropdown.Item>
