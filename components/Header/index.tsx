@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { styled, Dropdown, Dialog } from "@xl-vision/react";
+import { styled, Dropdown, Dialog, Avatar } from "@xl-vision/react";
 import { useAppDispatch, useAppSelector } from "../../lib/redux";
 import { useContext } from "react";
 import AppThemeContext, { AppTheme } from "../../lib/theme";
@@ -115,7 +115,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                 </>
               }
             >
-              <span>{currentUser.nickname}</span>
+              <Avatar src={currentUser.avatar}>{currentUser.nickname.slice(0,1)}</Avatar>
             </Dropdown>
           ) : (
             <>
