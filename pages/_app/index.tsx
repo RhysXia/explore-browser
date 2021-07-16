@@ -16,6 +16,7 @@ import {
   BaseTheme,
   createGlobalStyles,
 } from "@xl-vision/react";
+import Error from "next/error";
 import LayoutMap, { LayoutKey } from "../../layout";
 import AppThemeContext, { defaultAppTheme } from "../../lib/theme";
 
@@ -27,6 +28,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     initialReduxState,
     initialApolloState,
     layout = "default",
+    error,
     ...others
   } = pageProps;
 
@@ -56,6 +58,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <CustomBaseline />
+              {error && <Error statusCode={error.code} title={error.title} />}
               <Layout>
                 <Component {...others} />
               </Layout>
