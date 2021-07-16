@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { styled, Dropdown, Dialog, Avatar } from "@xl-vision/react";
+import { styled, Dropdown, Dialog, Avatar, ThemeContext } from "@xl-vision/react";
 import { useAppDispatch, useAppSelector } from "../../lib/redux";
 import { useContext } from "react";
 import AppThemeContext, { AppTheme } from "../../lib/theme";
@@ -68,6 +68,8 @@ const logoutGql = gql`
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
   const currentUser = useAppSelector((state) => state.currentUser);
 
+  const theme = React.useContext(ThemeContext)
+
   const appTheme = useContext(AppThemeContext);
 
   const [logout] = useMutation(logoutGql);
@@ -115,7 +117,10 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                 </>
               }
             >
-              <Avatar src={currentUser.avatar}>{currentUser.nickname.slice(0,1)}</Avatar>
+              <Avatar style={{
+                backgroundColor: theme.color.themes.primary.color,
+                cursor: 'pointer'
+              }} src={currentUser.avatar}>{currentUser.nickname.slice(0,1).toUpperCase()}</Avatar>
             </Dropdown>
           ) : (
             <>
