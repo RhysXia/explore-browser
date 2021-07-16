@@ -1,10 +1,8 @@
 import Head from "next/head";
-import { NextComponentType } from "next";
 import React from "react";
-import { AppPageContext } from "../typings/next";
-import { LayoutKey } from "../layout";
+import { Page } from "../typings/next";
 
-const Home: NextComponentType<AppPageContext, {layout: LayoutKey}> = (props) => {
+const Home: Page = (props) => {
   return (
     <div>
       <Head>
