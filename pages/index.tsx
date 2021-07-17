@@ -4,18 +4,18 @@ import { Page } from "../typings/next";
 
 const Home: Page = (props) => {
   return (
-    <div>
+    <>
       <Head>
         <title>首页｜Explore</title>
       </Head>
-      abc
-    </div>
+      <div>abc</div>
+    </>
   );
 };
 
 Home.getInitialProps = async (ctx) => {
   return {
-    layout: 'default'
+    layout: "default",
   };
 };
 

@@ -3,24 +3,34 @@ import React from "react";
 import { useContext } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import SpaceAside from "../components/SpaceAside";
 import AppThemeContext, { AppTheme } from "../lib/theme";
 
-const Root = styled('div')(() => {
+const Root = styled("div")(() => {
   return {
-    width: '100%',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  }
-})
-
-const Main = styled("div")<{ appTheme: AppTheme }>(({ theme, styleProps }) => {
-  const { appTheme } = styleProps;
-  return {
-    flex: 1,
-    margin: "16px auto",
-    maxWidth: appTheme.maxWidth,
+    width: "100%",
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
   };
+});
+
+const Container = styled("div")<{ appTheme: AppTheme }>(
+  ({ theme, styleProps }) => {
+    const { appTheme } = styleProps;
+    return {
+      flex: 1,
+      width: "100%",
+      maxWidth: appTheme.maxWidth,
+      margin: "0 auto",
+      display: "flex",
+      flexDirection: "row",
+    };
+  }
+);
+
+const Main = styled("div")(({ theme }) => {
+  return {};
 });
 
 const DefaultLayout: React.FunctionComponent<{ children: React.ReactNode }> = ({
@@ -31,7 +41,10 @@ const DefaultLayout: React.FunctionComponent<{ children: React.ReactNode }> = ({
   return (
     <Root>
       <Header />
-      <Main styleProps={{ appTheme }}>{children}</Main>
+      <Container styleProps={{ appTheme }}>
+        <SpaceAside />
+        <Main>{children}</Main>
+      </Container>
       <Footer />
     </Root>
   );
