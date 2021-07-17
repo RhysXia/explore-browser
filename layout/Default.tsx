@@ -18,8 +18,9 @@ const Main = styled("div")<{ appTheme: AppTheme }>(({ theme, styleProps }) => {
   const { appTheme } = styleProps;
   return {
     flex: 1,
-    margin: "16px auto",
+    width: '100%',
     maxWidth: appTheme.maxWidth,
+    margin: '0 auto',
   };
 });
 
