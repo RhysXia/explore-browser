@@ -1,10 +1,9 @@
 import React from "react";
-import Link from "next/link";
+import { ContentType } from "../../types/model";
 import { Button, styled } from "@xl-vision/react";
 import AppThemeContext, { AppTheme } from "../../lib/theme";
-import Context, { WriteStatus } from "./Context";
-
-export type ArticleWriteHeaderProps = {};
+import Link from "next/link";
+import { WriteStatus } from "./types";
 
 const Root = styled("header")<{ appTheme: AppTheme }>(
   ({ theme, styleProps }) => {
@@ -70,45 +69,51 @@ const Root = styled("header")<{ appTheme: AppTheme }>(
   }
 );
 
-const ArticleWriteHeader: React.FunctionComponent<ArticleWriteHeaderProps> =
-  () => {
-    const appTheme = React.useContext(AppThemeContext);
+export type WriteHeaderProps = {
+  title?: string;
+  content?: string;
+  contentType?: ContentType;
+  status?: WriteStatus;
+};
 
-    const { title, content, contentType, status } = React.useContext(Context);
+const WriteHeader: React.FunctionComponent<WriteHeaderProps> = (props) => {
+  const appTheme = React.useContext(AppThemeContext);
 
-    const handlePublish = React.useCallback(() => {}, []);
+  const { title, content, contentType, status } = props;
 
-    return (
-      <Root styleProps={{ appTheme }}>
-        <div className="container">
-          <div className="logo">
-            <Link href="/">Explore</Link>
-          </div>
-          <ul className="menus">
-            <li className="label">写文章</li>
-            <li className="status">
-              {status === WriteStatus.SAVED
-                ? "已保存"
-                : status === WriteStatus.SAVING
-                ? "保存中..."
-                : ""}
-            </li>
-          </ul>
-          <div className="actions">
-            <Button
-              disableElevation
-              variant="outlined"
-              theme="primary"
-              size="small"
-              disabled={!title || !content || !contentType}
-              onClick={handlePublish}
-            >
-              发布
-            </Button>
-          </div>
+  const handlePublish = React.useCallback(() => {}, []);
+
+  return (
+    <Root styleProps={{ appTheme }}>
+      <div className="container">
+        <div className="logo">
+          <Link href="/">Explore</Link>
         </div>
-      </Root>
-    );
-  };
+        <ul className="menus">
+          <li className="label">写文章</li>
+          <li className="status">
+            {status === WriteStatus.SAVED
+              ? "已保存"
+              : status === WriteStatus.SAVING
+              ? "保存中..."
+              : ""}
+          </li>
+        </ul>
+        <div className="actions">
+          <Button
+            disableElevation
+            variant="outlined"
+            theme="primary"
+            size="small"
+            disabled={!title || !content || !contentType}
+            onClick={handlePublish}
+          >
+            发布
+          </Button>
+        </div>
+      </div>
+    </Root>
+  );
+};
 
-export default ArticleWriteHeader;
+export default WriteHeader;
