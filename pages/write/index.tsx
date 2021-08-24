@@ -1,11 +1,9 @@
 import Head from "next/head";
 import React from "react";
-import ArticleWriteHeader from "../../components/ArticleWriteHeader";
-import Context, {
-  WriteStatus,
-} from "../../components/ArticleWriteHeader/Context";
-import { ContentType } from "../../model";
+import { ContentType } from "../../types/model";
 import { Page } from "../../typings/next";
+import { WriteStatus } from "../../components/write/types";
+import WriteHeader from "../../components/write/WriteHeader";
 
 const Write: Page = (props) => {
   const [status, setStatus] = React.useState<WriteStatus>();
@@ -21,9 +19,12 @@ const Write: Page = (props) => {
         <title>写文章｜Explore</title>
       </Head>
       <div>
-        <Context.Provider value={{ title, content, contentType, status }}>
-          <ArticleWriteHeader />
-        </Context.Provider>
+        <WriteHeader
+          title={title}
+          content={content}
+          contentType={contentType}
+          status={status}
+        />
       </div>
     </>
   );
