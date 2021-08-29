@@ -24,7 +24,7 @@ const Write: Page = (props) => {
           content={content}
           contentType={contentType}
           status={status}
-        />
+        /> 
       </div>
     </>
   );
