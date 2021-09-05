@@ -12,10 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.19",
     "@reduxjs/toolkit": "^1.6.0",
-    "@types/js-cookie": "^2.2.6",
-    "@types/react": "17.0.6",
-    "@types/styled-components": "^5.1.9",
-    "@xl-vision/react": "^0.1.1-alpha.10",
+    "@xl-vision/react": "^0.1.1-alpha.12",
     "graphql": "^15.5.0",
     "graphql-ws": "^4.5.1",
     "next": "^11.0.1",
@@ -29,6 +26,9 @@
     "ws": "^7.4.5"
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "@types/react": "17.0.6",
+    "@types/styled-components": "^5.1.9",
     "babel-plugin-styled-components": "^1.13.2",
     "eslint": "^7.30.0",
     "eslint-config-next": "^11.0.1",
