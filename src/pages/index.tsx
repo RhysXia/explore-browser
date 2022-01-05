@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import { Page } from "../typings/next";
+import { Page } from "../../typings/next";
 
 const Home: Page = (props) => {
   return (

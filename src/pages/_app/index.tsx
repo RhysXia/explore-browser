@@ -7,7 +7,7 @@ import { getReduxStore, useReduxStore } from "../../lib/redux";
 import React, { useMemo } from "react";
 import { setCurrentUser, setToken } from "../../lib/redux/store";
 import { Cookie } from "next-cookie";
-import { User } from "../../types/model";
+import { User } from "../../models/user";
 import { TOKEN_KEY } from "../../utils/consts";
 import {
   CssBaseline,

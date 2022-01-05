@@ -26,26 +26,14 @@ export enum UserStatus {
 }
 
 export type User = {
-  id: number
-  username: string
-  nickname: string
-  avatar?: string
-  email?: string
-  status: UserStatus
-  bio?: String
-  createdAt: number
-  updatedAt: number
-  lastLoginAt: number
-}
-
-export enum ContentType  {
-  HTML,
-  MARKDOWN
-}
-
-export type Article = {
-  id: number
-  title: number
-  content: string
-  contentType: ContentType
-}
+  id: number;
+  username: string;
+  nickname: string;
+  avatar?: string;
+  email?: string;
+  status: UserStatus;
+  bio?: String;
+  createdAt: number;
+  updatedAt: number;
+  lastLoginAt: number;
+};

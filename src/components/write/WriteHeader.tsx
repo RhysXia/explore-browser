@@ -1,9 +1,9 @@
 import React from "react";
-import { ContentType } from "../../types/model";
 import { Button, styled } from "@xl-vision/react";
 import AppThemeContext, { AppTheme } from "../../lib/theme";
 import Link from "next/link";
 import { WriteStatus } from "./types";
+import { ContentType } from "../../models/article";
 
 const Root = styled("header")<{ appTheme: AppTheme }>(
   ({ theme, styleProps }) => {
