@@ -1,0 +1,19 @@
+{
+  "extends": ["config:base", "schedule:weekly"],
+  "labels": ["dependencies"],
+  "ignorePaths": [],
+  "pin": true,
+  "rangeStrategy": "bump",
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "depTypeList": ["peerDependencies"],
+      "enabled": false
+    },
+    {
+      "matchDatasources": ["npm"],
+      "stabilityDays": 3
+    }
+  ],
+  "ignoreDeps": []
+}
