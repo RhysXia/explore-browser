@@ -8,7 +8,7 @@ import React, { FormEvent } from "react";
 import { LayoutKey } from "../../layout";
 import { useAppDispatch, useAppSelector } from "../../lib/redux";
 import { setToken } from "../../lib/redux/store";
-import { AppPageContext } from "../../typings/next";
+import { AppPageContext } from "../../../typings/next";
 
 const Root = styled("div")(({ theme }) => {
   return {
@@ -85,7 +85,7 @@ const SignIn: NextComponentType<AppPageContext, { layout: LayoutKey }> = (
         });
         dispatch(setToken(data?.login));
       } catch (e) {
-        setError(e.message);
+        setError((e as Error).message);
       }
     },
     [login, dispatch, username, password]

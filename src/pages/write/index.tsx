@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React from "react";
-import { ContentType } from "../../types/model";
-import { Page } from "../../typings/next";
+import { Page } from "../../../typings/next";
 import { WriteStatus } from "../../components/write/types";
 import WriteHeader from "../../components/write/WriteHeader";
+import { ContentType } from "../../models/article";
 
 const Write: Page = (props) => {
   const [status, setStatus] = React.useState<WriteStatus>();
@@ -24,7 +24,7 @@ const Write: Page = (props) => {
           content={content}
           contentType={contentType}
           status={status}
-        /> 
+        />
       </div>
     </>
   );

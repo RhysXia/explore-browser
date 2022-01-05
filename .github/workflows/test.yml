@@ -1,0 +1,59 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cache node_modules
+        id: node_modules_cache_id
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+
+      - name: install
+        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
+        run: npm ci
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: restore cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+
+      - name: lint
+        run: npm run lint
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: restore cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+
+      - name: lint
+        run: npm run build
