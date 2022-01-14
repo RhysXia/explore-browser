@@ -27,7 +27,7 @@
     "ws": "^7.4.5"
   },
   "devDependencies": {
-    "@types/js-cookie": "^2.2.6",
+    "@types/js-cookie": "^2.2.7",
     "@types/react": "17.0.38",
     "@types/styled-components": "^5.1.9",
     "babel-plugin-styled-components": "^1.13.2",
