@@ -1,36 +1,30 @@
-import type { AppContext, AppProps } from "next/app";
-import App from "next/app";
-import { ApolloProvider, gql } from "@apollo/client";
-import { Provider } from "react-redux";
-import { getApolloClient, useApollo } from "../../lib/apollo";
-import { getReduxStore, useReduxStore } from "../../lib/redux";
-import React, { useMemo } from "react";
-import { setCurrentUser, setToken } from "../../lib/redux/store";
-import { Cookie } from "next-cookie";
-import { User } from "../../models/user";
-import { TOKEN_KEY } from "../../utils/consts";
+import type { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
+import { ApolloProvider, gql } from '@apollo/client';
+import { Provider } from 'react-redux';
+import { getApolloClient, useApollo } from '../../lib/apollo';
+import { getReduxStore, useReduxStore } from '../../lib/redux';
+import React, { useMemo } from 'react';
+import { setCurrentUser, setToken } from '../../lib/redux/store';
+import { Cookie } from 'next-cookie';
+import { User } from '../../models/user';
+import { TOKEN_KEY } from '../../utils/consts';
 import {
   CssBaseline,
   ThemeProvider,
   LocalizationProvider,
   BaseTheme,
   createGlobalStyles,
-} from "@xl-vision/react";
-import Error from "next/error";
-import LayoutMap, { LayoutKey } from "../../layout";
-import AppThemeContext, { defaultAppTheme } from "../../lib/theme";
+} from '@xl-vision/react';
+import Error from 'next/error';
+import LayoutMap, { LayoutKey } from '../../layout';
+import AppThemeContext, { defaultAppTheme } from '../../lib/theme';
 
 const CustomBaseline = createGlobalStyles(() => {
   return {};
 });
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const {
-    initialReduxState,
-    initialApolloState,
-    layout = "default",
-    error,
-    ...others
-  } = pageProps;
+  const { initialReduxState, initialApolloState, layout = 'default', error, ...others } = pageProps;
 
   const store = useReduxStore(initialReduxState);
 
@@ -39,7 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const theme: BaseTheme = useMemo(() => {
     return {
       color: {
-        mode: "light",
+        mode: 'light',
       },
     };
   }, []);
@@ -53,7 +47,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <LocalizationProvider language="zh-CN">
+        <LocalizationProvider language='zh-CN'>
           <AppThemeContext.Provider value={appTheme}>
             <ThemeProvider theme={theme}>
               <CssBaseline />

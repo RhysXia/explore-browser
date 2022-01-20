@@ -1,6 +1,6 @@
-import Head from "next/head";
-import React from "react";
-import { Page } from "../../../typings/next";
+import Head from 'next/head';
+import React from 'react';
+import { Page } from '../../../typings/next';
 
 const Space: Page = (props) => {
   return (
@@ -13,17 +13,17 @@ const Space: Page = (props) => {
   );
 };
 
-Space.getInitialProps = async ({reduxStore}) => {
-  if(!reduxStore.getState().currentUser) {
+Space.getInitialProps = async ({ reduxStore }) => {
+  if (!reduxStore.getState().currentUser) {
     return {
       error: {
         code: 403,
-        title: '无权限访问'
-      }
-    }
+        title: '无权限访问',
+      },
+    };
   }
   return {
-    layout: 'space'
+    layout: 'space',
   };
 };
 

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 export const defaultAppTheme = {
-  maxWidth: 1200
-}
+  maxWidth: 1200,
+};
 
-export type AppTheme = typeof defaultAppTheme
+export type AppTheme = typeof defaultAppTheme;
 
-const AppThemeContext = React.createContext(defaultAppTheme)
+const AppThemeContext = React.createContext(defaultAppTheme);
 
-export default AppThemeContext
+export default AppThemeContext;

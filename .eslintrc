@@ -1,5 +1,5 @@
 {
-  "extends": "next",
+  "extends": ["plugin:prettier/recommended", "prettier", "next"],
   "rules": {
     "import/no-anonymous-default-export": "off"
   }

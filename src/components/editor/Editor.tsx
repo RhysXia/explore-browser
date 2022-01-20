@@ -1,6 +1,6 @@
-import React from "react";
-import { createEditor, Descendant } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
+import React from 'react';
+import { createEditor, Descendant } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 
 export type EditorProps = {
   initialValue?: Array<Descendant>;
@@ -10,8 +10,8 @@ export type EditorProps = {
 
 const DEFAULT_VALUE: Array<Descendant> = [
   {
-    type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
+    type: 'paragraph',
+    children: [{ text: 'A line of text in a paragraph.' }],
   },
 ];
 
