@@ -2,13 +2,13 @@ import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import { ApolloProvider, gql } from '@apollo/client';
 import { Provider } from 'react-redux';
-import { getApolloClient, useApollo } from '../../lib/apollo';
-import { getReduxStore, useReduxStore } from '../../lib/redux';
+import { getApolloClient, useApollo } from '../lib/apollo';
+import { getReduxStore, useReduxStore } from '../lib/redux';
 import React, { useMemo } from 'react';
-import { setCurrentUser, setToken } from '../../lib/redux/store';
+import { setCurrentUser, setToken } from '../lib/redux/store';
 import { Cookie } from 'next-cookie';
-import { User } from '../../models/user';
-import { TOKEN_KEY } from '../../utils/consts';
+import { User } from '../models/user';
+import { TOKEN_KEY } from '../utils/consts';
 import {
   CssBaseline,
   ThemeProvider,
@@ -17,8 +17,8 @@ import {
   createGlobalStyles,
 } from '@xl-vision/react';
 import Error from 'next/error';
-import LayoutMap, { LayoutKey } from '../../layout';
-import AppThemeContext, { defaultAppTheme } from '../../lib/theme';
+import LayoutMap, { LayoutKey } from '../layout';
+import AppThemeContext, { defaultAppTheme } from '../lib/theme';
 
 const CustomBaseline = createGlobalStyles(() => {
   return {};
