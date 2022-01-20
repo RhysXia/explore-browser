@@ -1,6 +1,6 @@
-import Head from "next/head";
-import React from "react";
-import { Page } from "../../typings/next";
+import Head from 'next/head';
+import React from 'react';
+import { Page } from '../../typings/next';
 
 const Home: Page = (props) => {
   return (
@@ -15,7 +15,7 @@ const Home: Page = (props) => {
 
 Home.getInitialProps = async (ctx) => {
   return {
-    layout: "default",
+    layout: 'default',
   };
 };
 

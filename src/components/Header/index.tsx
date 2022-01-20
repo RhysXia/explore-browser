@@ -1,70 +1,62 @@
-import React from "react";
-import Link from "next/link";
-import {
-  styled,
-  Dropdown,
-  Dialog,
-  Avatar,
-  ThemeContext,
-} from "@xl-vision/react";
-import { useAppDispatch, useAppSelector } from "../../lib/redux";
-import { useContext } from "react";
-import AppThemeContext, { AppTheme } from "../../lib/theme";
-import { gql, useMutation } from "@apollo/client";
-import { setCurrentUser, setToken } from "../../lib/redux/store";
-import { useRouter } from "next/dist/client/router";
-import { Cookie } from "next-cookie";
-import { TOKEN_KEY } from "../../utils/consts";
-import NoSsr from "../NoSsr";
+import React from 'react';
+import Link from 'next/link';
+import { styled, Dropdown, Dialog, Avatar, ThemeContext } from '@xl-vision/react';
+import { useAppDispatch, useAppSelector } from '../../lib/redux';
+import { useContext } from 'react';
+import AppThemeContext, { AppTheme } from '../../lib/theme';
+import { gql, useMutation } from '@apollo/client';
+import { setCurrentUser, setToken } from '../../lib/redux/store';
+import { useRouter } from 'next/dist/client/router';
+import { Cookie } from 'next-cookie';
+import { TOKEN_KEY } from '../../utils/consts';
+import NoSsr from '../NoSsr';
 
 export type HeaderProps = {};
 
-const Root = styled("header")<{ appTheme: AppTheme }>(
-  ({ theme, styleProps }) => {
-    const { appTheme } = styleProps;
-    return {
-      boxShadow: `0 1px 2px 0 ${theme.color.divider}`,
-      backgroundColor: theme.color.background.paper,
-      position: "sticky",
-      top: 0,
-      ul: {
-        listStyle: "none",
+const Root = styled('header')<{ appTheme: AppTheme }>(({ theme, styleProps }) => {
+  const { appTheme } = styleProps;
+  return {
+    boxShadow: `0 1px 2px 0 ${theme.color.divider}`,
+    backgroundColor: theme.color.background.paper,
+    position: 'sticky',
+    top: 0,
+    ul: {
+      listStyle: 'none',
+    },
+    a: {
+      textDecoration: `none`,
+      color: theme.color.text.primary,
+      transition: theme.transition.standard('color'),
+      '&:hover': {
+        color: theme.color.themes.primary.color,
       },
-      a: {
-        textDecoration: `none`,
-        color: theme.color.text.primary,
-        transition: theme.transition.standard("color"),
-        "&:hover": {
-          color: theme.color.themes.primary.color,
-        },
+    },
+    '.container': {
+      maxWidth: appTheme.maxWidth,
+      margin: 'auto',
+      height: 60,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+    },
+    '.logo': {
+      display: `inline-block`,
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    '.menus': {
+      flex: 1,
+    },
+    '.user': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      li: {
+        padding: `0 10px`,
       },
-      ".container": {
-        maxWidth: appTheme.maxWidth,
-        margin: "auto",
-        height: 60,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-around",
-      },
-      ".logo": {
-        display: `inline-block`,
-        fontSize: 18,
-        fontWeight: "bold",
-      },
-      ".menus": {
-        flex: 1,
-      },
-      ".user": {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-around",
-        li: {
-          padding: `0 10px`,
-        },
-      },
-    };
-  }
-);
+    },
+  };
+});
 
 const logoutGql = gql`
   mutation {
@@ -89,8 +81,8 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
   const handleSignOut = React.useCallback(() => {
     dialog.confirm({
-      title: "注销",
-      content: "确认注销吗？",
+      title: '注销',
+      content: '确认注销吗？',
       onConfirm: async () => {
         try {
           await logout();
@@ -99,43 +91,37 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
           dispatch(setCurrentUser(undefined));
           const cookie = new Cookie();
           cookie.remove(TOKEN_KEY);
-          router.replace("/");
+          router.replace('/');
         } catch {}
       },
     });
   }, [dialog, logout, dispatch, router]);
 
   const handleSpace = React.useCallback(() => {
-    router.push("/space");
+    router.push('/space');
   }, [router]);
 
   const handleWrite = React.useCallback(() => {
-    router.push("/write");
+    router.push('/write');
   }, [router]);
 
   return (
     <Root styleProps={{ appTheme }}>
-      <div className="container">
-        <div className="logo">
-          <Link href="/">Explore</Link>
+      <div className='container'>
+        <div className='logo'>
+          <Link href='/'>Explore</Link>
         </div>
-        <ul className="menus">{/* <li>123</li> */}</ul>
-        <ul className="user">
+        <ul className='menus'>{/* <li>123</li> */}</ul>
+        <ul className='user'>
           {currentUser ? (
             <li>
               <NoSsr>
                 <Dropdown
                   menus={
                     <>
-                      <Dropdown.Item onClick={handleSpace}>
-                        个人主页
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={handleWrite}>
-                        写文章
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={handleSignOut}>
-                        注销
-                      </Dropdown.Item>
+                      <Dropdown.Item onClick={handleSpace}>个人主页</Dropdown.Item>
+                      <Dropdown.Item onClick={handleWrite}>写文章</Dropdown.Item>
+                      <Dropdown.Item onClick={handleSignOut}>注销</Dropdown.Item>
                     </>
                   }
                 >
@@ -143,7 +129,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                   <Avatar
                     style={{
                       backgroundColor: theme.color.themes.primary.color,
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
                     src={currentUser.avatar}
                   >
@@ -155,10 +141,10 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
           ) : (
             <>
               <li>
-                <Link href="/signIn">登录</Link>
+                <Link href='/signIn'>登录</Link>
               </li>
               <li>
-                <Link href="/signUp">注册</Link>
+                <Link href='/signUp'>注册</Link>
               </li>
             </>
           )}

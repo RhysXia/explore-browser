@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../../models/user";
+import { createSlice } from '@reduxjs/toolkit';
+import { User } from '../../models/user';
 
 export type State = {
   token?: string;
@@ -9,7 +9,7 @@ export type State = {
 export const initialState: State = {};
 
 const slice = createSlice({
-  name: "root",
+  name: 'root',
   initialState,
   reducers: {
     setToken(state, action) {

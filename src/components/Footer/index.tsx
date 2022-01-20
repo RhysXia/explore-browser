@@ -1,13 +1,13 @@
-import { styled } from "@xl-vision/react";
-import React, { useContext } from "react";
-import AppThemeContext, { AppTheme } from "../../lib/theme";
+import { styled } from '@xl-vision/react';
+import React, { useContext } from 'react';
+import AppThemeContext, { AppTheme } from '../../lib/theme';
 
 export type FooterProps = {};
 
-const Root = styled("footer")<{ appTheme: AppTheme }>(({ styleProps }) => {
+const Root = styled('footer')<{ appTheme: AppTheme }>(({ styleProps }) => {
   const { appTheme } = styleProps;
   return {
-    margin: "auto",
+    margin: 'auto',
     maxWidth: appTheme.maxWidth,
   };
 });

@@ -1,8 +1,8 @@
-import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, split } from "@apollo/client";
-import { getMainDefinition } from "@apollo/client/utilities";
-import WebSocketLink from "./WebSocketLink";
-import { isClient, isServer, serverHost } from "../../utils/env";
-import { AppStore, getReduxStore } from "../redux";
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, split } from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import WebSocketLink from './WebSocketLink';
+import { isClient, isServer, serverHost } from '../../utils/env';
+import { AppStore, getReduxStore } from '../redux';
 
 const createClient = (store?: AppStore) => {
   const httpLink = new HttpLink({
@@ -12,50 +12,47 @@ const createClient = (store?: AppStore) => {
   const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
     operation.setContext(({ headers = {} }) => {
-      const token = store?.getState().token
-      if(token) {
+      const token = store?.getState().token;
+      if (token) {
         return {
           headers: {
             ...headers,
             authorization: token,
-          }
-        }
+          },
+        };
       }
       return {
-        headers
-      }
-
+        headers,
+      };
     });
 
     return forward(operation);
-  })
+  });
 
-  const httpAuthLink = from([authMiddleware, httpLink])
+  const httpAuthLink = from([authMiddleware, httpLink]);
 
   const splitLink = isClient
     ? split(
         ({ query }) => {
           const definition = getMainDefinition(query);
           return (
-            definition.kind === "OperationDefinition" &&
-            definition.operation === "subscription"
+            definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
           );
         },
         new WebSocketLink({
           url: `ws://${serverHost}/subscriptions`,
           retryAttempts: 10,
           connectionParams: async () => {
-            const token = store?.getState().token
-            if(token) {
+            const token = store?.getState().token;
+            if (token) {
               return {
-                token
-              }
+                token,
+              };
             }
-            return {
-            };
+            return {};
           },
         }),
-        httpAuthLink
+        httpAuthLink,
       )
     : httpAuthLink;
 
@@ -89,8 +86,8 @@ export const getApolloClient = (initialState?: object, store: AppStore = getRedu
 };
 
 export const useApollo = (initialState: object, store: AppStore) => {
-  if(apolloClient) {
-    return apolloClient
+  if (apolloClient) {
+    return apolloClient;
   }
-  return getApolloClient(initialState, store)
+  return getApolloClient(initialState, store);
 };
