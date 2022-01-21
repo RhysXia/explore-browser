@@ -14,7 +14,7 @@
     "@apollo/client": "^3.3.19",
     "@reduxjs/toolkit": "^1.6.0",
     "@xl-vision/react": "^0.1.1-alpha.12",
-    "graphql": "^15.5.0",
+    "graphql": "^16.2.0",
     "graphql-ws": "^5.5.5",
     "next": "^12.0.8",
     "next-cookie": "^2.6.2",
