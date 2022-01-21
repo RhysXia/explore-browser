@@ -40,7 +40,7 @@ const createClient = (store?: AppStore) => {
           );
         },
         new WebSocketLink({
-          url: `ws://${serverHost}/subscriptions`,
+          url: `ws://${serverHost}/subscription`,
           retryAttempts: 10,
           connectionParams: async () => {
             const token = store?.getState().token;
