@@ -1,8 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const DefaultLayout: React.FunctionComponent<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const DefaultLayout: React.FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 
