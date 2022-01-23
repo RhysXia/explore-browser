@@ -11,7 +11,7 @@
     "sitemap": "next-sitemap --config sitemap.js"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.19",
+    "@apollo/client": "^3.5.7",
     "@reduxjs/toolkit": "^1.6.0",
     "@xl-vision/react": "^0.1.1-alpha.12",
     "graphql": "^16.2.0",
