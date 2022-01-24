@@ -64,4 +64,4 @@ jobs:
           --platform=linux/amd64,linux/arm/v7,linux/arm64 \
           --output "type=image,push=true" \
           --file ./Dockerfile . \
-          --tag rhysxia/explore-server:"${fullCommit: 0: 7}"
+          --tag rhysxia/explore-browser:"${fullCommit: 0: 7}"
