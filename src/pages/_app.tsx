@@ -12,7 +12,7 @@ import { TOKEN_KEY } from '../utils/consts';
 import {
   CssBaseline,
   ThemeProvider,
-  LocalizationProvider,
+  ConfigProvider,
   BaseTheme,
   createGlobalStyles,
 } from '@xl-vision/react';
@@ -47,7 +47,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <LocalizationProvider language='zh-CN'>
+        <ConfigProvider language='zh-CN'>
           <AppThemeContext.Provider value={appTheme}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
@@ -58,7 +58,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               </Layout>
             </ThemeProvider>
           </AppThemeContext.Provider>
-        </LocalizationProvider>
+        </ConfigProvider>
       </ApolloProvider>
     </Provider>
   );

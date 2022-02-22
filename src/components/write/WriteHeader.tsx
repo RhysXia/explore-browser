@@ -101,7 +101,7 @@ const WriteHeader: React.FunctionComponent<WriteHeaderProps> = (props) => {
           <Button
             disableElevation
             variant='outlined'
-            theme='primary'
+            color='primary'
             size='small'
             disabled={!title || !content || !contentType}
             onClick={handlePublish}
