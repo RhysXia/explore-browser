@@ -26,7 +26,7 @@ specifiers:
   react-redux: ^7.2.6
   slate: ^0.72.8
   slate-react: ^0.72.9
-  styled-components: ^5.3.3
+  styled-components: ^5.3.5
   typescript: ^4.6.3
   ws: ^8.4.2
 
