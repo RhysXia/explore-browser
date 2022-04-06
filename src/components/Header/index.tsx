@@ -83,12 +83,13 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
     dialog.confirm({
       title: '注销',
       content: '确认注销吗？',
+      style: {
+        minWidth: 400,
+      },
       onConfirm: async () => {
         try {
           await logout();
-
           dispatch(setToken(undefined));
-          dispatch(setCurrentUser(undefined));
           const cookie = new Cookie();
           cookie.remove(TOKEN_KEY);
           router.replace('/');

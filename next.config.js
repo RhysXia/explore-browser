@@ -1,9 +1,15 @@
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 module.exports = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
-  return {
+  /**
+   * @type {import('next').NextConfig}
+   */
+  const nextConfig = {
     poweredByHeader: false,
     reactStrictMode: true,
     async rewrites() {
@@ -15,4 +21,6 @@ module.exports = (phase) => {
       ].filter(Boolean);
     },
   };
+
+  return withBundleAnalyzer(nextConfig);
 };

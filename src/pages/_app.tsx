@@ -9,20 +9,12 @@ import { setCurrentUser, setToken } from '../lib/redux/store';
 import { Cookie } from 'next-cookie';
 import { User } from '../models/user';
 import { TOKEN_KEY } from '../utils/consts';
-import {
-  CssBaseline,
-  ThemeProvider,
-  ConfigProvider,
-  BaseTheme,
-  createGlobalStyles,
-} from '@xl-vision/react';
+import { ThemeProvider, ConfigProvider, BaseTheme } from '@xl-vision/react';
 import Error from 'next/error';
 import LayoutMap, { LayoutKey } from '../layout';
 import AppThemeContext, { defaultAppTheme } from '../lib/theme';
+import CustomCssBaseline from '../components/CustomCssBaseline';
 
-const CustomBaseline = createGlobalStyles(() => {
-  return {};
-});
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { initialReduxState, initialApolloState, layout = 'default', error, ...others } = pageProps;
 
@@ -50,8 +42,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <ConfigProvider language='zh-CN'>
           <AppThemeContext.Provider value={appTheme}>
             <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <CustomBaseline />
+              <CustomCssBaseline />
               {error && <Error statusCode={error.code} title={error.title} />}
               <Layout>
                 <Component {...others} />
@@ -74,9 +65,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
   const cookie = new Cookie(ctx);
 
-  if (!state.currentUser) {
-    const token = state.token || cookie.get(TOKEN_KEY);
+  const token = state.token || cookie.get(TOKEN_KEY);
 
+  if (!state.currentUser) {
     if (token) {
       if (!state.token) {
         reduxStore.dispatch(setToken(token));
@@ -112,6 +103,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     cookie.set(TOKEN_KEY, newToken, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     });
+  } else {
+    // token不存在，认为注销
+    reduxStore.dispatch(setCurrentUser(undefined));
   }
 
   (ctx as any).reduxStore = reduxStore;

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { Page } from '../../../typings/next';
+import Editor from '../../components/Editor';
 import { WriteStatus } from '../../components/write/types';
 import WriteHeader from '../../components/write/WriteHeader';
 import { ContentType } from '../../models/article';
@@ -18,6 +19,7 @@ const Write: Page = (props) => {
       </Head>
       <div>
         <WriteHeader title={title} content={content} contentType={contentType} status={status} />
+        <Editor />
       </div>
     </>
   );

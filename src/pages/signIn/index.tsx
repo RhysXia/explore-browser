@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client';
-import { styled } from '@xl-vision/react';
+import { styled, Input, Button } from '@xl-vision/react';
 import { NextComponentType } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
@@ -9,8 +9,11 @@ import { LayoutKey } from '../../layout';
 import { useAppDispatch, useAppSelector } from '../../lib/redux';
 import { setToken } from '../../lib/redux/store';
 import { AppPageContext } from '../../../typings/next';
+import { CaretRightFilled } from '@xl-vision/icons';
 
 const Root = styled('div')(({ theme }) => {
+  const { elevations, color } = theme;
+
   return {
     width: '100%',
     height: '100vh',
@@ -32,11 +35,26 @@ const Root = styled('div')(({ theme }) => {
       backgroundColor: theme.color.background.paper,
       display: 'flex',
       flexDirection: 'column',
-      padding: '0 24px 84px',
-    },
+      padding: '0 24px 48px',
+      width: 400,
+      borderRadius: 4,
+      ...elevations(5),
 
-    '.title': {
-      textAlign: 'center',
+      '.title': {
+        textAlign: 'center',
+      },
+      '.xl-input': {
+        marginBottom: 20,
+      },
+
+      '.sign-up': {
+        marginTop: 16,
+        textAlign: 'right',
+        a: {
+          display: 'inline-flex',
+          alignItems: 'center',
+        },
+      },
     },
   };
 });
@@ -98,18 +116,23 @@ const SignIn: NextComponentType<AppPageContext, { layout: LayoutKey }> = (props)
               <Link href='/'>Explore</Link>
             </h1>
             {error && <div className='msg'>{error}</div>}
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder='用户名'
-            ></input>
-            <input
+            <Input value={username} onChange={setUsername} placeholder='用户名'></Input>
+            <Input.Password
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={setPassword}
               placeholder='密码'
-              type='password'
-            ></input>
-            <button type='submit'>登录</button>
+            ></Input.Password>
+            <Button color='primary' type='submit'>
+              登录
+            </Button>
+            <div className='sign-up'>
+              <Link href='/signUp'>
+                <a>
+                  去注册
+                  <CaretRightFilled />
+                </a>
+              </Link>
+            </div>
           </form>
         </div>
       </Root>
