@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactEventHandler, useState } from 'react';
 import { createEditor, Descendant } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
@@ -18,15 +18,33 @@ const DEFAULT_VALUE: Array<Descendant> = [
 const Editor: React.FunctionComponent<EditorProps> = (props) => {
   const { initialValue = DEFAULT_VALUE, onChange, placeholder } = props;
 
+  const [editor] = useState(() => withReact(createEditor()));
+
   const [value, setValue] = React.useState(initialValue);
+
+  const handleChange = React.useCallback((value: Array<Descendant>) => {
+    console.log(value);
+    setValue(value);
+  }, []);
+
+  const handleSelect: ReactEventHandler<HTMLElement> = React.useCallback(
+    (e) => {
+      const { selection } = editor;
+
+      console.log(selection);
+    },
+    [editor],
+  );
 
   React.useEffect(() => {
     onChange?.(value);
   }, [value, onChange]);
 
-  const editor = React.useMemo(() => withReact(createEditor()), []);
-
-  return null;
+  return (
+    <Slate editor={editor} value={initialValue} onChange={handleChange}>
+      <Editable onSelect={handleSelect} />
+    </Slate>
+  );
 };
 
 export default Editor;
