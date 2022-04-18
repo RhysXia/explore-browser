@@ -12,7 +12,7 @@ const createClient = (store?: AppStore) => {
   const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
     operation.setContext(({ headers = {} }) => {
-      const token = store?.getState().token;
+      const token = store?.getState().root.token;
       if (token) {
         return {
           headers: {
@@ -43,7 +43,7 @@ const createClient = (store?: AppStore) => {
           url: `ws://${serverHost}/subscription`,
           retryAttempts: 10,
           connectionParams: async () => {
-            const token = store?.getState().token;
+            const token = store?.getState().root.token;
             if (token) {
               return {
                 token,

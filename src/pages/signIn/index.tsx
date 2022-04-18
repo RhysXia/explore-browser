@@ -1,4 +1,3 @@
-import { gql, useMutation } from '@apollo/client';
 import { styled, Input, Button } from '@xl-vision/react';
 import { NextComponentType } from 'next';
 import { useRouter } from 'next/dist/client/router';
@@ -7,7 +6,7 @@ import Link from 'next/link';
 import React, { FormEvent } from 'react';
 import { LayoutKey } from '../../layout';
 import { useAppDispatch, useAppSelector } from '../../lib/redux';
-import { setToken } from '../../lib/redux/store';
+import { login } from '../../lib/redux/rootSlice';
 import { AppPageContext } from '../../../typings/next';
 import { CaretRightFilled } from '@xl-vision/icons';
 
@@ -59,16 +58,10 @@ const Root = styled('div')(({ theme }) => {
   };
 });
 
-const loginGql = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password)
-  }
-`;
-
 const SignIn: NextComponentType<AppPageContext, { layout: LayoutKey }> = (props) => {
   const router = useRouter();
 
-  const token = useAppSelector((state) => state.token);
+  const token = useAppSelector((state) => state.root.token);
 
   const dispatch = useAppDispatch();
 
@@ -76,8 +69,6 @@ const SignIn: NextComponentType<AppPageContext, { layout: LayoutKey }> = (props)
   const [password, setPassword] = React.useState('');
 
   const [error, setError] = React.useState('');
-
-  const [login] = useMutation<{ login: string }, { username: string; password: string }>(loginGql);
 
   React.useEffect(() => {
     // 用户已登录，则跳转回首页
@@ -90,18 +81,12 @@ const SignIn: NextComponentType<AppPageContext, { layout: LayoutKey }> = (props)
     async (e: FormEvent) => {
       e.preventDefault();
       try {
-        const { data } = await login({
-          variables: {
-            username,
-            password,
-          },
-        });
-        dispatch(setToken(data?.login));
+        await dispatch(login({ username, password }));
       } catch (e) {
         setError((e as Error).message);
       }
     },
-    [login, dispatch, username, password],
+    [dispatch, username, password],
   );
 
   return (

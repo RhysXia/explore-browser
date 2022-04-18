@@ -4,11 +4,8 @@ import { styled, Dropdown, Dialog, Avatar, ThemeContext } from '@xl-vision/react
 import { useAppDispatch, useAppSelector } from '../../lib/redux';
 import { useContext } from 'react';
 import AppThemeContext, { AppTheme } from '../../lib/theme';
-import { gql, useMutation } from '@apollo/client';
-import { setCurrentUser, setToken } from '../../lib/redux/store';
+import { logout } from '../../lib/redux/rootSlice';
 import { useRouter } from 'next/dist/client/router';
-import { Cookie } from 'next-cookie';
-import { TOKEN_KEY } from '../../utils/consts';
 import NoSsr from '../NoSsr';
 
 export type HeaderProps = {};
@@ -58,20 +55,12 @@ const Root = styled('header')<{ appTheme: AppTheme }>(({ theme, styleProps }) =>
   };
 });
 
-const logoutGql = gql`
-  mutation {
-    logout
-  }
-`;
-
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
-  const currentUser = useAppSelector((state) => state.currentUser);
+  const currentUser = useAppSelector((state) => state.root.currentUser);
 
   const theme = React.useContext(ThemeContext);
 
   const appTheme = useContext(AppThemeContext);
-
-  const [logout] = useMutation(logoutGql);
 
   const [dialog, contextHolder] = Dialog.useDialog();
 
@@ -88,15 +77,12 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
       },
       onConfirm: async () => {
         try {
-          await logout();
-          dispatch(setToken(undefined));
-          const cookie = new Cookie();
-          cookie.remove(TOKEN_KEY);
+          await dispatch(logout());
           router.replace('/');
         } catch {}
       },
     });
-  }, [dialog, logout, dispatch, router]);
+  }, [dialog, dispatch, router]);
 
   const handleSpace = React.useCallback(() => {
     router.push('/space');

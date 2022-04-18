@@ -1,13 +1,12 @@
 import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
-import { ApolloProvider, gql } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { getApolloClient, useApollo } from '../lib/apollo';
 import { getReduxStore, useReduxStore } from '../lib/redux';
 import React, { useMemo } from 'react';
-import { setCurrentUser, setToken } from '../lib/redux/store';
+import { queryCurrentUser, setCurrentUser, setToken } from '../lib/redux/rootSlice';
 import { Cookie } from 'next-cookie';
-import { User } from '../models/user';
 import { TOKEN_KEY } from '../utils/consts';
 import { ThemeProvider, ConfigProvider, BaseTheme } from '@xl-vision/react';
 import Error from 'next/error';
@@ -61,33 +60,19 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const reduxStore = getReduxStore();
   const apolloClient = getApolloClient(undefined, reduxStore);
 
-  const state = reduxStore.getState();
+  let rootState = reduxStore.getState().root;
 
   const cookie = new Cookie(ctx);
 
-  const token = state.token || cookie.get(TOKEN_KEY);
+  const token = rootState.token || cookie.get(TOKEN_KEY);
 
-  if (!state.currentUser) {
+  if (!rootState.currentUser) {
     if (token) {
-      if (!state.token) {
+      if (!rootState.token) {
         reduxStore.dispatch(setToken(token));
       }
       try {
-        const { data } = await apolloClient.query<{ currentUser: User }>({
-          query: gql`
-            query {
-              currentUser {
-                id
-                username
-                nickname
-                email
-                avatar
-                bio
-              }
-            }
-          `,
-        });
-        reduxStore.dispatch(setCurrentUser(data.currentUser));
+        await reduxStore.dispatch(queryCurrentUser());
       } catch (err) {
         // 出现错误，重置token
         reduxStore.dispatch(setToken(undefined));
@@ -96,7 +81,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     }
   }
 
-  const newToken = reduxStore.getState().token;
+  rootState = reduxStore.getState().root;
+
+  const newToken = rootState.token;
 
   if (newToken) {
     // 更新过期时间

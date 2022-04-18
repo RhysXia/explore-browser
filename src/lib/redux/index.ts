@@ -1,15 +1,24 @@
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import slice, { initialState } from './store';
+import rootSlice, { initialState as rootInitialState, State as RootState } from './rootSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { isServer } from '../../utils/env';
 
-const createStore = (preloadedState: object) => {
+export type InitialState = { root: RootState };
+
+export type PreloadState = {
+  [key in keyof InitialState]?: Partial<InitialState[key]>;
+};
+
+const createStore = (preloadedState: PreloadState) => {
+  const initialState: InitialState = {
+    root: rootInitialState,
+  };
+
   return configureStore({
-    reducer: slice.reducer,
-    preloadedState: {
-      ...initialState,
-      ...preloadedState,
+    reducer: {
+      root: rootSlice.reducer,
     },
+    preloadedState: shadowMerge(initialState, preloadedState),
   });
 };
 
@@ -17,7 +26,7 @@ export type AppStore = ReturnType<typeof createStore>;
 
 let store: AppStore | undefined;
 
-export const getReduxStore = (preloadedState?: object) => {
+export const getReduxStore = (preloadedState?: PreloadState) => {
   let _store = store;
   if (_store) {
     if (preloadedState) {
@@ -41,11 +50,11 @@ export const getReduxStore = (preloadedState?: object) => {
   return _store;
 };
 
-export const useReduxStore = (initialState?: object) => {
+export const useReduxStore = (preloadedState?: PreloadState) => {
   if (store) {
     return store;
   }
-  return getReduxStore(initialState);
+  return getReduxStore(preloadedState);
 };
 
 export type AppState = ReturnType<AppStore['getState']>;
@@ -55,3 +64,16 @@ export const useAppDispatch = () => useDispatch<AppStore['dispatch']>();
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
 export type AppThunk<R = void> = ThunkAction<R, AppState, unknown, AnyAction>;
+
+const shadowMerge = (initialState: InitialState, preloadState: PreloadState) => {
+  const result = {} as InitialState;
+
+  (Object.keys(initialState) as Array<keyof InitialState>).forEach((key) => {
+    result[key] = {
+      ...initialState[key],
+      ...(preloadState[key] || {}),
+    };
+  });
+
+  return result;
+};
