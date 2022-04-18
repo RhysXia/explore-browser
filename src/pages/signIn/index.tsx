@@ -6,8 +6,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React, { FormEvent } from 'react';
 import { LayoutKey } from '../../layout';
-import { useAppDispatch, useAppSelector } from '../../lib/redux';
-import { setToken } from '../../lib/redux/store';
+import { useAppDispatch, useAppSelector } from '../../lib/store';
+import { setToken } from '../../lib/store/store';
 import { AppPageContext } from '../../../typings/next';
 import { CaretRightFilled } from '@xl-vision/icons';
 

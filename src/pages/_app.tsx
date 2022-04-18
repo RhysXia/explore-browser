@@ -1,11 +1,8 @@
 import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import { ApolloProvider, gql } from '@apollo/client';
-import { Provider } from 'react-redux';
 import { getApolloClient, useApollo } from '../lib/apollo';
-import { getReduxStore, useReduxStore } from '../lib/redux';
 import React, { useMemo } from 'react';
-import { setCurrentUser, setToken } from '../lib/redux/store';
 import { Cookie } from 'next-cookie';
 import { User } from '../models/user';
 import { TOKEN_KEY } from '../utils/consts';
@@ -14,13 +11,12 @@ import Error from 'next/error';
 import LayoutMap, { LayoutKey } from '../layout';
 import AppThemeContext, { defaultAppTheme } from '../lib/theme';
 import CustomCssBaseline from '../components/CustomCssBaseline';
+import { tokenStore } from '../lib/store';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { initialReduxState, initialApolloState, layout = 'default', error, ...others } = pageProps;
 
-  const store = useReduxStore(initialReduxState);
-
-  const apolloClient = useApollo(initialApolloState, store);
+  const apolloClient = useApollo(initialApolloState);
 
   const theme: BaseTheme = useMemo(() => {
     return {
@@ -58,8 +54,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const { ctx } = appContext;
 
-  const reduxStore = getReduxStore();
-  const apolloClient = getApolloClient(undefined, reduxStore);
+  const token = tokenStore.init;
+
+  const apolloClient = getApolloClient(undefined, { token });
 
   const state = reduxStore.getState();
 

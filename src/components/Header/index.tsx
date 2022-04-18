@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { styled, Dropdown, Dialog, Avatar, ThemeContext } from '@xl-vision/react';
-import { useAppDispatch, useAppSelector } from '../../lib/redux';
+import { useAppDispatch, useAppSelector } from '../../lib/store';
 import { useContext } from 'react';
 import AppThemeContext, { AppTheme } from '../../lib/theme';
 import { gql, useMutation } from '@apollo/client';
-import { setCurrentUser, setToken } from '../../lib/redux/store';
+import { setCurrentUser, setToken } from '../../lib/store/store';
 import { useRouter } from 'next/dist/client/router';
 import { Cookie } from 'next-cookie';
 import { TOKEN_KEY } from '../../utils/consts';

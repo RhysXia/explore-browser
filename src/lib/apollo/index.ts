@@ -2,9 +2,14 @@ import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, split } from '
 import { getMainDefinition } from '@apollo/client/utilities';
 import WebSocketLink from './WebSocketLink';
 import { isClient, isServer, serverHost } from '../../utils/env';
-import { AppStore, getReduxStore } from '../redux';
+import { useAtom } from 'jotai';
+import { tokenStore } from '../store';
 
-const createClient = (store?: AppStore) => {
+export type CreateClientOptions = {
+  token: string;
+};
+
+const createClient = ({ token }: CreateClientOptions) => {
   const httpLink = new HttpLink({
     uri: `http://${serverHost}/graphql`,
   });
@@ -12,7 +17,6 @@ const createClient = (store?: AppStore) => {
   const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
     operation.setContext(({ headers = {} }) => {
-      const token = store?.getState().token;
       if (token) {
         return {
           headers: {
@@ -43,7 +47,6 @@ const createClient = (store?: AppStore) => {
           url: `ws://${serverHost}/subscription`,
           retryAttempts: 10,
           connectionParams: async () => {
-            const token = store?.getState().token;
             if (token) {
               return {
                 token,
@@ -66,8 +69,8 @@ const createClient = (store?: AppStore) => {
 
 let apolloClient: ApolloClient<any>;
 
-export const getApolloClient = (initialState?: object, store: AppStore = getReduxStore()) => {
-  const _apolloClient = apolloClient ?? createClient(store);
+export const getApolloClient = (initialState: object | undefined, options: CreateClientOptions) => {
+  const _apolloClient = apolloClient ?? createClient(options);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -85,9 +88,11 @@ export const getApolloClient = (initialState?: object, store: AppStore = getRedu
   return _apolloClient;
 };
 
-export const useApollo = (initialState: object, store: AppStore) => {
+export const useApollo = (initialState: object) => {
+  const [token] = useAtom(tokenStore);
+
   if (apolloClient) {
     return apolloClient;
   }
-  return getApolloClient(initialState, store);
+  return getApolloClient(initialState, { token });
 };
