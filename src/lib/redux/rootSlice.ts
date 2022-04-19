@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Cookie } from 'next-cookie';
 import { User } from '../../models/user';
 import { TOKEN_KEY } from '../../utils/consts';
@@ -18,10 +18,10 @@ const slice = createSlice({
   name: slideName,
   initialState,
   reducers: {
-    setToken(state, action) {
+    setToken(state, action: PayloadAction<string | undefined>) {
       state.token = action.payload;
     },
-    setCurrentUser(state, action) {
+    setCurrentUser(state, action: PayloadAction<User | undefined>) {
       state.currentUser = action.payload;
     },
   },
