@@ -6,7 +6,7 @@ specifiers:
   '@reduxjs/toolkit': ^1.7.2
   '@types/js-cookie': ^3.0.2
   '@types/node': ^17.0.16
-  '@types/react': 17.0.44
+  '@types/react': 17.0.45
   '@types/styled-components': ^5.1.25
   '@xl-vision/icons': ^0.1.1-alpha.19
   '@xl-vision/react': ^0.1.1-alpha.19
@@ -33,8 +33,8 @@ specifiers:
 dependencies:
   '@apollo/client': 3.5.10_2a6e03e4c8e5d67961f22774405308cf
   '@reduxjs/toolkit': 1.8.1_react-redux@7.2.8+react@18.0.0
-  '@xl-vision/icons': 0.1.1-alpha.19_65b3471426cd071bc72113bd0e30719b
-  '@xl-vision/react': 0.1.1-alpha.19_0a2f7972280a0427c0a1eceba021a8f2
+  '@xl-vision/icons': 0.1.1-alpha.19_20163f42ae734ee0bc4fd36f0d46f40e
+  '@xl-vision/react': 0.1.1-alpha.19_0309250c6b4679d84937fd15dda6ef1c
   graphql: 16.3.0
   graphql-ws: 5.6.4_graphql@16.3.0
   next: 12.1.6_react-dom@18.0.0+react@18.0.0
@@ -51,7 +51,7 @@ devDependencies:
   '@next/bundle-analyzer': 12.1.6
   '@types/js-cookie': 3.0.2
   '@types/node': 17.0.23
-  '@types/react': 17.0.44
+  '@types/react': 17.0.45
   '@types/styled-components': 5.1.25
   babel-plugin-styled-components: 2.0.7_styled-components@5.3.5
   eslint: 8.12.0
@@ -478,7 +478,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       hoist-non-react-statics: 3.3.2
 
   /@types/is-hotkey/0.1.7:
@@ -508,13 +508,13 @@ packages:
     resolution: {integrity: sha512-D02o3FPfqQlfu2WeEYwh3x2otYd2Dk1o8wAfsA0B1C2AJEFxE663Ozu7JzuWbznGgW248NaOF6wsqCGNq9d3qw==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       hoist-non-react-statics: 3.3.2
       redux: 4.1.2
     dev: false
 
-  /@types/react/17.0.44:
-    resolution: {integrity: sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==}
+  /@types/react/17.0.45:
+    resolution: {integrity: sha512-YfhQ22Lah2e3CHPsb93tRwIGNiSwkuz1/blk4e6QrWS0jQzCSNbGLtOEYhPg02W0yGTTmpajp7dCTbBAMN3qsg==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
@@ -527,7 +527,7 @@ packages:
     resolution: {integrity: sha512-fgwl+0Pa8pdkwXRoVPP9JbqF0Ivo9llnmsm+7TCI330kbPIFd9qv1Lrhr37shf4tnxCOSu+/IgqM7uJXLWZZNQ==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       csstype: 3.0.11
     dev: true
 
@@ -614,7 +614,7 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@xl-vision/hooks/0.1.1-alpha.19_3adb690023d1157f64abd5db2f6a6306:
+  /@xl-vision/hooks/0.1.1-alpha.19_de97e41256b963228035727e6fc9a516:
     resolution: {integrity: sha512-uvFLrUp1ODJd8YU8WtVHta4IKfQyXIPUxZQ+q1ToDo+NtwXuAkmZ62zx+Xnp4aYICDoXh1dQdnxr6+S+R8QF0Q==}
     peerDependencies:
       '@babel/runtime': ^7.15.4
@@ -624,13 +624,13 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       '@xl-vision/utils': 0.1.1-alpha.19
       react: 18.0.0
       resize-observer-polyfill: 1.5.1
     dev: false
 
-  /@xl-vision/icons/0.1.1-alpha.19_65b3471426cd071bc72113bd0e30719b:
+  /@xl-vision/icons/0.1.1-alpha.19_20163f42ae734ee0bc4fd36f0d46f40e:
     resolution: {integrity: sha512-ap4Wp/iWfeeP8uJPOdLEfYaqoVgB6ZBwSLWYJL0kJDHEXTUhkNoHhcM0CvMV9oxFYLGLaTxfOSngg4kx3xzYgg==}
     peerDependencies:
       '@babel/runtime': ^7.15.4
@@ -640,8 +640,8 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 17.0.44
-      '@xl-vision/styled-engine': 0.1.1-alpha.19_6c22d398cc04f49d4eb43806eb820292
+      '@types/react': 17.0.45
+      '@xl-vision/styled-engine': 0.1.1-alpha.19_ae116850f5e8aae99326732a5fdff316
       '@xl-vision/utils': 0.1.1-alpha.19
       clsx: 1.1.1
       prop-types: 15.8.1
@@ -652,7 +652,7 @@ packages:
       - styled-components
     dev: false
 
-  /@xl-vision/react/0.1.1-alpha.19_0a2f7972280a0427c0a1eceba021a8f2:
+  /@xl-vision/react/0.1.1-alpha.19_0309250c6b4679d84937fd15dda6ef1c:
     resolution: {integrity: sha512-5Evu7mqSZYC5ePoN9N4uG7Pby6ONQee+WVSD4LW/cZr4vchhuRDaInmZt39aNnWBDD2TBBdqQZc0V5AWeAroQw==}
     peerDependencies:
       '@babel/runtime': ^7.15.4
@@ -664,10 +664,10 @@ packages:
         optional: true
     dependencies:
       '@popperjs/core': 2.11.5
-      '@types/react': 17.0.44
-      '@xl-vision/hooks': 0.1.1-alpha.19_3adb690023d1157f64abd5db2f6a6306
-      '@xl-vision/icons': 0.1.1-alpha.19_65b3471426cd071bc72113bd0e30719b
-      '@xl-vision/styled-engine': 0.1.1-alpha.19_6c22d398cc04f49d4eb43806eb820292
+      '@types/react': 17.0.45
+      '@xl-vision/hooks': 0.1.1-alpha.19_de97e41256b963228035727e6fc9a516
+      '@xl-vision/icons': 0.1.1-alpha.19_20163f42ae734ee0bc4fd36f0d46f40e
+      '@xl-vision/styled-engine': 0.1.1-alpha.19_ae116850f5e8aae99326732a5fdff316
       '@xl-vision/utils': 0.1.1-alpha.19
       clsx: 1.1.1
       prop-types: 15.8.1
@@ -679,16 +679,16 @@ packages:
       - styled-components
     dev: false
 
-  /@xl-vision/styled-engine-types/0.1.1-alpha.19_@types+react@17.0.44:
+  /@xl-vision/styled-engine-types/0.1.1-alpha.19_@types+react@17.0.45:
     resolution: {integrity: sha512-e5d/uy0w+0DMmClFsnC6F275fBqWhOjq1ahUQFbVOuAm5fufFXCbhsgPViXvTc73pV7Zoxeuc4yjXFsxCPMrSw==}
     peerDependencies:
       '@types/react': '>=16.8.0'
     dependencies:
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       csstype: 3.0.11
     dev: false
 
-  /@xl-vision/styled-engine/0.1.1-alpha.19_6c22d398cc04f49d4eb43806eb820292:
+  /@xl-vision/styled-engine/0.1.1-alpha.19_ae116850f5e8aae99326732a5fdff316:
     resolution: {integrity: sha512-yirQowqbH6ZwCOxAKzCbGSxNlMSqz4yDp3Q6k/mi1cA9ESsJMcEJ9Z75jTCV3Z0esXuQEb2QGvporC7X8uwuaQ==}
     peerDependencies:
       '@babel/runtime': ^7.15.4
@@ -703,9 +703,9 @@ packages:
       '@types/styled-components':
         optional: true
     dependencies:
-      '@types/react': 17.0.44
+      '@types/react': 17.0.45
       '@types/styled-components': 5.1.25
-      '@xl-vision/styled-engine-types': 0.1.1-alpha.19_@types+react@17.0.44
+      '@xl-vision/styled-engine-types': 0.1.1-alpha.19_@types+react@17.0.45
       prop-types: 15.8.1
       react: 18.0.0
       react-is: 17.0.2
