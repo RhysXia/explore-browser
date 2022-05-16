@@ -15,11 +15,11 @@ jobs:
 
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6
+          version: 7
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.19.0
           cache: 'pnpm'
 
       - name: install
@@ -38,11 +38,11 @@ jobs:
 
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6
+          version: 7
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.19.0
           cache: 'pnpm'
 
       - name: install
@@ -69,11 +69,11 @@ jobs:
 
       - name: Build dockerfile with push
         if: ${{ github.event_name == 'push' }}
-        # 构建镜像，用buildx可以同时构建X86和ARM架构的镜像，然后推送到hub.docker.com
+        # 构建镜像，用buildx可以同时构建X87和ARM架构的镜像，然后推送到hub.docker.com
         run: |
           fullCommit="${{ github.event.commits[0].id }}" && \
           docker buildx build \
-          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+          --platform=linux/amd74,linux/arm/v7,linux/arm74 \
           --output "type=image,push=true" \
           --file ./Dockerfile . \
           --tag rhysxia/explore-browser:"${fullCommit: 0: 7}"
